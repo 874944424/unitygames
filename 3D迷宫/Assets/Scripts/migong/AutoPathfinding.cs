@@ -46,6 +46,11 @@ public class AutoPathfinding :MonoBehaviour
         pb.x = widthLimit * 2 - 1;
         pb.y = heightLimit * 2;
 
+        if (pa.x >= pb.x || pa.y >= pb.y)
+        {
+            return;
+        }
+
         ClearWay();
         FindWay(pa, pb);
         Showtheway();

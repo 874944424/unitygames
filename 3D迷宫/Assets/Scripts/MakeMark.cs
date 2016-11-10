@@ -5,13 +5,13 @@ public class MakeMark : MonoBehaviour
 {
     public GameObject markPre;
     public GameObject markparent;
-    private float length = 9f;  //射线长度距离
+    private float length = 5f;  //射线长度距离
 
     void Start() { }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             Check();
         }
@@ -20,7 +20,8 @@ public class MakeMark : MonoBehaviour
     //检测碰撞到物体没有
     void Check()
     {
-        Ray r = Camera.main.ScreenPointToRay(Input.mousePosition); //屏幕坐标设为射线目标位置
+        Camera camera_player = GameObject.FindGameObjectWithTag(Tags.playercamera).GetComponent<Camera>();
+        Ray r = camera_player.ScreenPointToRay(Input.mousePosition); //屏幕坐标设为射线目标位置
         RaycastHit hit; //射线碰撞信息
 
         if (Physics.Raycast(r, out hit, length))
