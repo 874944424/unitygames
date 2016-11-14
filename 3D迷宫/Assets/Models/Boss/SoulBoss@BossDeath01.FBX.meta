@@ -164,7 +164,7 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleRotations: 1
+    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
@@ -208,10 +208,11 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.47679326
-        functionName: OnDeath
+      - time: 0.8833867
+        functionName: OnDeading
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 1000013614967748, guid: f3d681e41af44424fbe90d812eb28bdb,
+          type: 2}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

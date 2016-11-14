@@ -338,10 +338,11 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.33386382
-        functionName: StartSinking
+      - time: 0.8833144
+        functionName: OnDeading
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 1000010061897374, guid: f97b160de28afc045ab003e66f500973,
+          type: 2}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

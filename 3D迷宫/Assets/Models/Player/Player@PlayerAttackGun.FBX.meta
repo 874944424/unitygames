@@ -180,13 +180,13 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleRotations: 1
+    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
     animationImportWarnings: "\nDefault bone length found in this file is different
       form the one found in the source avatar:\n\t'b_LeftLegUpper' : position error
-      = 9.829093 mm\n\t'b_RightLegUpper' : position error = 3.509815 mm\n\nClip 'Take
+      = 9.829038 mm\n\t'b_RightLegUpper' : position error = 3.509818 mm\n\nClip 'Take
       001' has import animation warnings that might lower retargeting quality:\nNote:
       Activate translation DOF on avatar to improve retargeting quality.\n\t'b_LeftLegUpper'
       has translation animation that will be discarded.\n\t'b_RightLegUpper' has translation
@@ -224,10 +224,19 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.33834645
-        functionName: AttackGun
+      - time: 0.25776038
+        functionName: DamageCaculateshooter
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 1000011869380546, guid: da57058e8a6459640b45bd66afcf2ba0,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: stopAttack
+        data: 
+        objectReferenceParameter: {fileID: 1000011869380546, guid: da57058e8a6459640b45bd66afcf2ba0,
+          type: 2}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

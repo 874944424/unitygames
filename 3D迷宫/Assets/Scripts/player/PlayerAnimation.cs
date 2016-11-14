@@ -27,6 +27,7 @@ public class PlayerAnimation : MonoBehaviour
             if (!havePlayDieAnimation)
             {            
                 havePlayDieAnimation = true;
+                PlayState(AnimsName.soldierDie_animName);
             }
         }
         else
@@ -57,5 +58,12 @@ public class PlayerAnimation : MonoBehaviour
     {
         anim.CrossFade(animName, 0.2f);//会有0.2秒的缓冲时间，0.2秒内渐变到animName
         //anim.Play(animName); //不管当前正在播放的动画，终止然后播放animName       
+    }
+
+    public void PlayerOnHurt(float damage)
+    {
+        player.TakeDamage(damage);
+        player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 1.5f, player.transform.position.z);
+        Debug.Log("受到伤害");
     }
 }

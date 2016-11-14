@@ -64,6 +64,12 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="3D迷宫.CSharp.Plugins.csproj">
@@ -72,11 +78,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Enemy\AnimValueNames.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyBullet.cs" />
+    <Compile Include="Assets\Scripts\Enemy\SoulEnemy.cs" />
+    <Compile Include="Assets\Scripts\Enemy\SoulEnemyShooter.cs" />
+    <Compile Include="Assets\Scripts\Enemy\ZombEnemy.cs" />
     <Compile Include="Assets\Scripts\FollowPlayerSetMinimap.cs" />
     <Compile Include="Assets\Scripts\Gamemanager.cs" />
     <Compile Include="Assets\Scripts\MakeMark.cs" />
     <Compile Include="Assets\Scripts\Tags.cs" />
     <Compile Include="Assets\Scripts\migong\AutoPathfinding.cs" />
+    <Compile Include="Assets\Scripts\migong\GetProducePoints.cs" />
     <Compile Include="Assets\Scripts\migong\RandCreatePrim.cs" />
     <Compile Include="Assets\Scripts\player\AnimsName.cs" />
     <Compile Include="Assets\Scripts\player\Bullet.cs" />

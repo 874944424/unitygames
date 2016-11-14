@@ -164,13 +164,13 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleRotations: 1
+    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
     animationImportWarnings: "\nDefault bone length found in this file is different
       form the one found in the source avatar:\n\t'b_LeftLegUpper' : position error
-      = 57.287952 mm\n\t'b_RightLegUpper' : position error = 130.892426 mm\n\nClip
+      = 57.287960 mm\n\t'b_RightLegUpper' : position error = 130.892456 mm\n\nClip
       'Take 001' has import animation warnings that might lower retargeting quality:\nNote:
       Activate translation DOF on avatar to improve retargeting quality.\n\t'b_Spine'
       has translation animation that will be discarded.\n\t'b_Spine' is inbetween
@@ -213,10 +213,11 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.64978904
-        functionName: OnDeath
+      - time: 0.8512542
+        functionName: OnDeading
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 1000013815356252, guid: f68c41416d0c1e846a7a40c203582df6,
+          type: 2}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

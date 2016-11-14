@@ -164,7 +164,7 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleRotations: 1
+    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
@@ -207,9 +207,18 @@ ModelImporter:
       curves: []
       events:
       - time: 0.57383966
-        functionName: Attack1
+        functionName: DamageCaculate
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 1000013614967748, guid: f3d681e41af44424fbe90d812eb28bdb,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: stopAttack
+        data: 
+        objectReferenceParameter: {fileID: 1000013614967748, guid: f3d681e41af44424fbe90d812eb28bdb,
+          type: 2}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

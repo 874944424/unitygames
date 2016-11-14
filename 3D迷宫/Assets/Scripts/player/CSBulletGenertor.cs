@@ -8,25 +8,28 @@ public class CSBulletGenertor : MonoBehaviour
     public GameObject bulletprafab; //子弹模型
     public GameObject bullet_parent;    //子弹父物体类方便管理
     public GameObject bulletdection;    //默认开火方向
+    public AudioClip fireclip;
 
     private float timer = 0;
     private bool isFiring = false; //是否正在开火
 
     public Camera soldierCamera;
+    public OwnerPlayer player;
 
     void Start()
     {
         bullet_parent = GameObject.Find("bullet_parent");
         soldierCamera = GameObject.FindGameObjectWithTag(Tags.playercamera).GetComponent<Camera>();
+        player = GameObject.FindGameObjectWithTag(Tags.palyer).GetComponent<OwnerPlayer>();
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && player.hp > 0)
         {
             isFiring = true;
         }
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) || player.hp <= 0)
         {
             isFiring = false;
         }
@@ -46,6 +49,7 @@ public class CSBulletGenertor : MonoBehaviour
         flash.Flash();//闪光
         GameObject go_bullet = GameObject.Instantiate(bulletprafab, transform.position, Quaternion.identity) as GameObject;
         go_bullet.transform.parent = bullet_parent.transform;
+        transform.GetComponent<AudioSource>().PlayOneShot(fireclip);
 
         //得到当前物体的目标
         Vector3 point_center = soldierCamera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, 0));

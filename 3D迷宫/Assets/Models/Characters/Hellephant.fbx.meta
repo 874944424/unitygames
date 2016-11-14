@@ -233,8 +233,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Death
       takeName: Take 001
-      firstFrame: 200
-      lastFrame: 240
+      firstFrame: 273
+      lastFrame: 273
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -254,10 +254,11 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.37848607
-        functionName: StartSinking
+      - time: 0.76310146
+        functionName: OnDeading
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 1000012485189042, guid: c358e5fefdaabcc4ea279700c48b56d0,
+          type: 2}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

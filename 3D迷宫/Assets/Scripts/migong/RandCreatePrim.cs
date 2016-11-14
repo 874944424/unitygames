@@ -5,11 +5,13 @@ using System;
 
 public enum node       //创建迷宫时的格子类型
 {
-    unpass = 0,
-    pass = 1,
-    prepass = 3,
-    wall = 2,
+    unpass = 0,     //未处理的点
+    pass = 1,       //为通路的点
+    prepass = 3,    //支路打通时经过的点
+    wall = 2,       //为墙的的点
     truepass = 4,   //正确的道路
+    produce = 5,    //为怪物或物品产生的点
+    truewayproduce = 6, //主路经上的支路死路
 }
 public class RandCreatePrim : MonoBehaviour
 {
@@ -24,15 +26,19 @@ public class RandCreatePrim : MonoBehaviour
     public Dictionary<string, node> map_dict = new Dictionary<string, node>();         //地图信息
     public GameObject wallPrefabs;      //创建墙壁的模型
     public GameObject groundPrefabs;       //创建地面的模型
-    public GameObject parentobj;        //选择父物体.
+    public GameObject parentobj;        //地面和墙面选择父物体.
     public int[] startXY = { 1, 1};
     public int[] endXY = { 6, 6 };
     public int widthLimit = 6;
     public int heightLimit = 6;
 
+    public List<GameObject> producePres = new List<GameObject>();   //随机生成物模型
+    private GameObject produceparent;   //随机生成物的父物体方便管理
 
     void Start()
     {
+        parentobj = GameObject.Find("WallsGrounds_parent");
+        produceparent = GameObject.Find("produce_parent");
         CreatePrefabMap();
     }
 
@@ -109,7 +115,7 @@ public class RandCreatePrim : MonoBehaviour
             //打通到迷宫出口的一条路
             if (dection == 0)   //上
             {
-                if (targetX - 2 < 1 || empty_mazemap[targetX - 2, targetY] == node.pass)
+                if (targetX - 2 < 1 || empty_mazemap[targetX - 2, targetY] == node.pass || empty_mazemap[targetX - 2, targetY] == node.truewayproduce)
                 {
                     dection++;
                     count--;
@@ -125,11 +131,11 @@ public class RandCreatePrim : MonoBehaviour
                     dection = RandomInt();  //方向
                 }
             }
-            if (dection == 1) //右
+            if (dection == 3) //右
             {
-                if (targetY + 1 >= widthLimit * 2 || empty_mazemap[targetX, targetY + 2] == node.pass)
+                if (targetY + 1 >= widthLimit * 2 || empty_mazemap[targetX, targetY + 2] == node.pass || empty_mazemap[targetX, targetY + 2] == node.truewayproduce)
                 {
-                    dection++;
+                    dection = 0;
                     count--;
                 }
                 else
@@ -145,7 +151,7 @@ public class RandCreatePrim : MonoBehaviour
             }
             if (dection == 2)    //下
             {
-                if (targetX + 1 >= heightLimit * 2 || empty_mazemap[targetX + 2, targetY] == node.pass)
+                if (targetX + 1 >= heightLimit * 2 || empty_mazemap[targetX + 2, targetY] == node.pass || empty_mazemap[targetX + 2, targetY] == node.truewayproduce)
                 {
                     dection++;
                     count--;
@@ -161,11 +167,11 @@ public class RandCreatePrim : MonoBehaviour
                     dection = RandomInt();  //方向
                 }
             }
-            if (dection == 3)   //左
+            if (dection == 1)   //左
             {
-                if (targetY - 1 <= 0 || empty_mazemap[targetX, targetY - 2] == node.pass)
+                if (targetY - 1 <= 0 || empty_mazemap[targetX, targetY - 2] == node.pass || empty_mazemap[targetX, targetY - 2] == node.truewayproduce)
                 {
-                    dection = 0;
+                    dection ++;
                     count--;
                 }
                 else
@@ -180,13 +186,17 @@ public class RandCreatePrim : MonoBehaviour
                 }
             }
             /////四个方向都检查完毕后
-            if (count <= 0)
+            if (count < 0)
             {
                 if (way.Count == 0)
                 {
                     Debug.Log("一定是出错了，进入死路但是已经无路可退了");
                     break;
                 }
+                //判断后退节点是否为死路点
+                CheckPoint(targetX, targetY, ref empty_mazemap);
+                //Debug.Log("trueway produce point" + targetX + targetY + empty_mazemap[targetX, targetY]);
+
                 //倒退到前一步
                 way.RemoveAt(way.Count - 1);
                 string nodeXY = way[way.Count - 1];
@@ -198,163 +208,17 @@ public class RandCreatePrim : MonoBehaviour
         }
         empty_mazemap[(endX * 2 - 1), (endY * 2 - 1)] = node.pass;
 
-        //打通其余的格子   
-        while (unpassnode.Count > 0)   //判断格子是否全部连通
-        {
-            int index = RandomInt(0, unpassnode.Count);
-            int node_index = unpassnode[index].IndexOf(",", 0);
-            string nodeX = unpassnode[index].Substring(0, node_index);
-            string nodeY = unpassnode[index].Substring(node_index + 1);
-            targetX = int.Parse(nodeX);
-            targetY = int.Parse(nodeY);
-
-            List<string> findway = new List<string>();
-            findway.Add(targetX + "," + targetY);
-
-            count = 4;
-            int count_passnode = 4;  //降低passnode的优先级
-            dection = RandomInt();  //方向
- 
-            unpassnode.Remove((targetX) + "," + targetY);
-
-            while (empty_mazemap[targetX, targetY] != node.pass)
-            {
-                empty_mazemap[targetX, targetY] = node.prepass;
-                if (dection == 0)   //上
-                {
-                    if (targetX - 1 <= 0 || empty_mazemap[targetX - 2, targetY] == node.prepass)
-                    {
-                        dection++;
-                        count--;
-                        count_passnode--;
-                    }
-                    else if (count_passnode > 0 && empty_mazemap[targetX - 2, targetY] == node.pass)
-                    {
-                        dection++;
-                        count_passnode--;
-                    }
-                    else
-                    {
-                        empty_mazemap[targetX - 1, targetY] = node.prepass;
-                        targetX = targetX - 2;
-                        findway.Add(targetX + "," + targetY);
-                        count = 4;
-                        count_passnode = 4;
-                        dection = RandomInt();  //方向
-
-                        unpassnode.Remove((targetX) + "," + targetY);
-                    }
-                }
-                if (dection == 1) //右
-                {
-                    if (targetY + 1 >= widthLimit * 2 || empty_mazemap[targetX, targetY + 2] == node.prepass)
-                    {
-                        dection++;
-                        count--;
-                        count_passnode--;
-                    }
-                    else if (count_passnode > 0 && empty_mazemap[targetX, targetY + 2] == node.pass)
-                    {
-                        dection++;
-                        count_passnode--;
-                    }
-                    else
-                    {
-                        empty_mazemap[targetX, targetY + 1] = node.prepass;
-                        targetY = targetY + 2;
-                        findway.Add(targetX + "," + targetY);
-                        count = 4;
-                        dection = RandomInt();  //方向
-
-                        unpassnode.Remove((targetX) + "," + targetY);
-                    }
-                }
-                if (dection == 2)    //下
-                {
-                    if (targetX + 1 >= heightLimit * 2 || empty_mazemap[targetX + 2, targetY] == node.prepass)
-                    {
-                        dection++;
-                        count--;
-                        count_passnode--;
-                    }
-                    else if (count_passnode > 0 && empty_mazemap[targetX + 2, targetY] == node.pass)
-                    {
-                        dection++;
-                        count_passnode--;
-                    }
-                    else
-                    {
-                        empty_mazemap[targetX + 1, targetY] = node.prepass;
-                        targetX = targetX + 2;
-                        findway.Add(targetX + "," + targetY);
-                        count = 4;
-                        dection = RandomInt();  //方向
-
-                        unpassnode.Remove((targetX) + "," + targetY);
-                    }
-                }
-                if (dection == 3)   //左
-                {
-                    if (targetY - 1 <= 0 || empty_mazemap[targetX, targetY - 2] == node.prepass)
-                    {
-                        dection = 0;
-                        count--;
-                        count_passnode--;
-                    }
-                    else if (count_passnode > 0 && empty_mazemap[targetX, targetY - 2] == node.pass)
-                    {
-                        dection = 0;
-                        count_passnode--;
-                    }
-                    else
-                    {
-                        empty_mazemap[targetX, targetY - 1] = node.prepass;
-                        targetY = targetY - 2;
-                        findway.Add(targetX + "," + targetY);
-                        count = 4;
-                        dection = RandomInt();  //方向
-
-                        unpassnode.Remove((targetX) + "," + targetY);
-                    }
-                }
-
-                /////四个方向都检查完毕后
-                if (count <= 0)
-                {
-                    if (findway.Count == 0)
-                    {
-                        Debug.Log("一定是出错了，进入死路但是已经无路可退了");
-                        break;
-                    }
-                    //倒退到前一步
-                    findway.RemoveAt(findway.Count - 1);
-                    string nodeXY = findway[findway.Count - 1];
-                    int nodeindex = nodeXY.IndexOf(",", 0);
-                    targetX = int.Parse(nodeXY.Substring(0, nodeindex));
-                    targetY = int.Parse(nodeXY.Substring(nodeindex + 1));
-                    count = 4;
-                }
-            }
-            //通路换算成已通过
-            for (int i = 0; i < findway.Count; i++)
-            {
-                string nodepassXY = findway[i];
-                int index_pass = nodepassXY.IndexOf(",", 0);
-                int nodepassX = int.Parse(nodepassXY.Substring(0, index_pass));
-                int nodepassY = int.Parse(nodepassXY.Substring(index_pass + 1));
-
-                empty_mazemap[nodepassX, nodepassY] = node.pass;
-            }
-        }
+        //打通其余墙面
+        MakeThroughtMap(unpassnode, ref empty_mazemap);
 
         return empty_mazemap;
     }
     private int RandomInt(int min = 0, int max = 4)
-    {       
-        return UnityEngine.Random.Range(min, max);
+    {
+        int result = UnityEngine.Random.Range(min, max * 3);
+        result = (result + 1) % max;
+        return result;
     }
-
-
     //创建实体迷宫
     private void CreatePrefabMap()
     {
@@ -402,133 +266,236 @@ public class RandCreatePrim : MonoBehaviour
                     GameObject obj_node = Instantiate(wallPrefabs, new Vector3((float)i, 0, (float)j), Quaternion.identity) as GameObject;
                     obj_node.transform.parent = parentobj.transform;
                 }
+                //生成随机物
+                if(map[i, j] == node.truewayproduce || map[i, j] == node.produce)
+                     CreateProduce(i, j);
+                //生成地面
                 GameObject obj_ground = Instantiate(groundPrefabs, new Vector3((float)i, -1, (float)j), Quaternion.identity) as GameObject;
                 obj_ground.transform.parent = parentobj.transform;
 
                 //保存地图信息
-                map_dict.Add(i + "," + j, map[i, j]);
+                map_dict.Add(i + "," + j, map[i, j]);              
             }
         }
 
         parentobj.transform.localScale = new Vector3(10, 10, 10);
     }
+    //检测后退的点处地图信息
+    void CheckPoint(int x, int y, ref node[,] map, node node = node.truewayproduce)
+    {
+        //附近三面墙着为生成点
+        int point_count = 3;    //记录附近不为空的点的位子
+        if (map[(x - 1), y] != node.wall)
+        {
+            point_count--;
+        }
+        if (map[(x + 1), y] != node.wall)
+        {
+            point_count--;
+        }
+        if (map[x, (y - 1)] != node.wall)
+        {
+            point_count--;
+        }
+        if (map[x, (y + 1)] != node.wall)
+        {
+            point_count--;
+        }
 
+        if (point_count == 2)    //存在三面墙的点
+        {
+            map[x, y] = node;
+        }
+    }
+    //生成--TODO生成更多的怪物和物品
+    void CreateProduce(int x, int y)
+    {
+        int index_produce = UnityEngine.Random.Range(0, producePres.Count); //选着随机物品
+        GameObject produce_obj = Instantiate(producePres[index_produce], new Vector3(x * 10, 0, y * 10), Quaternion.identity) as GameObject;
+        produce_obj.transform.parent = produceparent.transform;
+    }
+    //打通剩余的网格通路
+    void MakeThroughtMap(List<string> unpassnode, ref node[,] empty_mazemap)
+    {
+        //打通其余的格子  
+        List<string> findway = new List<string>();
+        while (unpassnode.Count > 0)   //判断格子是否全部连通
+        {
+            int index = RandomInt(0, unpassnode.Count);
+            int node_index = unpassnode[index].IndexOf(",", 0);
+            string nodeX = unpassnode[index].Substring(0, node_index);
+            string nodeY = unpassnode[index].Substring(node_index + 1);
+            int targetX = int.Parse(nodeX);
+            int targetY = int.Parse(nodeY);
+            findway.Clear();
+            findway.Add(targetX + "," + targetY);
 
-    //找到正确的路径
-    //把路径保存起来,防止进入思路后后退
-    //private List<string> MakeTrueWay(int startX, int startY, int endX, int endY, node[,] map)
-    //{
-    //    List<string> way = new List<string>();
+            int count = 4;
+            int count_passnode = 4;  //降低passnode的优先级
+            int dection = RandomInt();  //方向
 
-    //    int targetX = startX * 2 - 1;
-    //    int targetY = startY * 2 - 1;
+            unpassnode.Remove((targetX) + "," + targetY);
 
-    //    map[targetX, targetY] = node.pass;
-    //    way.Add(startX + "," + startY);
-    //    int count = 4; //方向选择判断次数
-    //    while (targetX != endX || targetY != endY)
-    //    {
-    //        int dection = RandomInt();  //0 上 1右 2下 3左
-    //        if (dection == 0) 
-    //        {
-    //            if (targetX - 2 < 1)
-    //            {
-    //                dection++;
-    //                count--;
-    //            }
-    //            else if (map[targetX - 2, targetY] == node.pass)
-    //            {
-    //                dection++;
-    //                count--;
-    //            }
-    //            else
-    //            {
-    //                targetX -= 2;
-    //                map[targetX, targetY] = node.pass;
-    //                way.Add(targetX + "," + targetY);
+            //注意判断的时候是跟随dection进行，可能上个节点成功后，接下的节点没有进行循环判断就跳到下一个dection
 
-    //                map[targetX + 1, targetY] = node.pass;  //隔离墙打破
-    //            }
-    //        }
+            while (empty_mazemap[targetX, targetY] != node.pass || empty_mazemap[targetX, targetY] != node.truewayproduce)
+            {
+                empty_mazemap[targetX, targetY] = node.prepass;
+                unpassnode.Remove((targetX) + "," + targetY);
+                if (dection == 0)   //上
+                {
+                    if (targetX - 1 <= 0 || empty_mazemap[targetX - 2, targetY] == node.prepass
+                        || empty_mazemap[targetX - 2, targetY] == node.produce)
+                    {
+                        dection++;
+                        count--;
+                        count_passnode--;
+                    }
+                    else if (count_passnode > 0 && (empty_mazemap[targetX - 2, targetY] == node.pass || empty_mazemap[targetX - 2, targetY] == node.truewayproduce))
+                    {
+                        dection++;
+                        count_passnode--;
+                    }
+                    else
+                    {
+                        empty_mazemap[targetX - 1, targetY] = node.prepass;
+                        targetX = targetX - 2;
+                        findway.Add(targetX + "," + targetY);
+                        count = 4;
+                        count_passnode = 4;
+                        dection = RandomInt();  //方向
 
-    //        if (dection == 1)
-    //        {
-    //            if (targetY + 2 > widthLimit)
-    //            {
-    //                dection++;
-    //                count--;
-    //            }
-    //            else if (map[targetX, targetY + 2] == node.pass)
-    //            {
-    //                dection++;
-    //                count--;
-    //            }
-    //            else
-    //            {
-    //                targetY += 2;
-    //                map[targetX, targetY] = node.pass;
-    //                way.Add(targetX + "," + targetY);
+                        unpassnode.Remove((targetX) + "," + targetY);
+                        if (empty_mazemap[targetX, targetY] == node.pass || empty_mazemap[targetX, targetY] == node.truewayproduce)
+                            break;
+                        else
+                            empty_mazemap[targetX, targetY] = node.prepass;
+                    }
+                }
+                if (dection == 1) //右
+                {
+                    if (targetY + 1 >= widthLimit * 2 || empty_mazemap[targetX, targetY + 2] == node.prepass
+                        || empty_mazemap[targetX, targetY + 2] == node.produce)
+                    {
+                        dection++;
+                        count--;
+                        count_passnode--;
+                    }
+                    else if (count_passnode > 0 && (empty_mazemap[targetX, targetY + 2] == node.pass || empty_mazemap[targetX, targetY + 2] == node.truewayproduce))
+                    {
+                        dection++;
+                        count_passnode--;
+                    }
+                    else
+                    {
+                        empty_mazemap[targetX, targetY + 1] = node.prepass;
+                        targetY = targetY + 2;
+                        findway.Add(targetX + "," + targetY);
+                        count = 4;
+                        dection = RandomInt();  //方向
 
-    //                map[targetX, targetY - 1] = node.pass;
-    //            }
-    //        }
+                        unpassnode.Remove((targetX) + "," + targetY);
+                        if (empty_mazemap[targetX, targetY] == node.pass || empty_mazemap[targetX, targetY] == node.truewayproduce)
+                            break;
+                        else
+                            empty_mazemap[targetX, targetY] = node.prepass;
+                    }
+                }
+                if (dection == 2)    //下
+                {
+                    if (targetX + 1 >= heightLimit * 2 || empty_mazemap[targetX + 2, targetY] == node.prepass
+                        || empty_mazemap[targetX + 2, targetY] == node.produce)
+                    {
+                        dection++;
+                        count--;
+                        count_passnode--;
+                    }
+                    else if (count_passnode > 0 && (empty_mazemap[targetX + 2, targetY] == node.pass || empty_mazemap[targetX + 2, targetY] == node.truewayproduce))
+                    {
+                        dection++;
+                        count_passnode--;
+                    }
+                    else
+                    {
+                        empty_mazemap[targetX + 1, targetY] = node.prepass;
+                        targetX = targetX + 2;
+                        findway.Add(targetX + "," + targetY);
+                        count = 4;
+                        dection = RandomInt();  //方向
 
-    //        if (dection == 2)
-    //        {
-    //            if (targetX + 2 > heightLimit)
-    //            {
-    //                dection++;
-    //                count--;
-    //            }
-    //            else if (map[targetX + 2, targetY] == node.pass)
-    //            {
-    //                dection++;
-    //                count--;
-    //            }
-    //            else
-    //            {
-    //                targetX += 2;
-    //                map[targetX, targetY] = node.pass;
-    //                way.Add(targetX + "," + targetY);
-    //                map[targetX - 1, targetY] = node.pass;
-    //            }
-    //        }
+                        unpassnode.Remove((targetX) + "," + targetY);
+                        if (empty_mazemap[targetX, targetY] == node.pass || empty_mazemap[targetX, targetY] == node.truewayproduce)
+                            break;
+                        else
+                            empty_mazemap[targetX, targetY] = node.prepass;
+                    }
+                }
+                if (dection == 3)   //左
+                {
+                    if (targetY - 1 <= 0 || empty_mazemap[targetX, targetY - 2] == node.prepass
+                        || empty_mazemap[targetX, targetY - 2] == node.produce)
+                    {
+                        dection = 0;
+                        count--;
+                        count_passnode--;
+                    }
+                    else if (count_passnode > 0 && (empty_mazemap[targetX, targetY - 2] == node.pass || empty_mazemap[targetX, targetY - 2] == node.truewayproduce))
+                    {
+                        dection = 0;
+                        count_passnode--;
+                    }
+                    else
+                    {
+                        empty_mazemap[targetX, targetY - 1] = node.prepass;
+                        targetY = targetY - 2;
+                        findway.Add(targetX + "," + targetY);
+                        count = 4;
+                        dection = RandomInt();  //方向
 
-    //        if (dection == 3)
-    //        {
-    //            if (targetY - 2 < 1)
-    //            {
-    //                dection++;
-    //                count--;
-    //            }
-    //            else if (map[targetX, targetY - 2] == node.pass)
-    //            {
-    //                dection++;
-    //                count--;
-    //            }
-    //            else
-    //            {
+                        unpassnode.Remove((targetX) + "," + targetY);
+                        if (empty_mazemap[targetX, targetY] == node.pass || empty_mazemap[targetX, targetY] == node.truewayproduce)
+                            break;
+                        else
+                            empty_mazemap[targetX, targetY] = node.prepass;
+                    }
+                }
 
-    //                targetY -= 2;
-    //                map[targetX, targetY] = node.pass;
-    //                way.Add(targetX + "," + targetY);
-    //                map[targetX, targetY + 1] = node.pass;
-    //            }
+                /////四个方向都检查完毕后
+                if (count <= 0)
+                {
+                    //后退就为生成物品或怪物的点
+                    CheckPoint(targetX, targetY, ref empty_mazemap, node.produce);
+                    //Debug.Log("MAP produce point" + targetX + targetY + empty_mazemap[targetX, targetY]);
+                    //倒退到前一步
+                    findway.RemoveAt(findway.Count - 1);
+                    if (findway.Count == 0)
+                    {
 
-    //        }
+                        Debug.Log("一定是出错了，进入死路但是已经无路可退了");
+                        break;
+                    }
+                    string nodeXY = findway[findway.Count - 1];
+                    int nodeindex = nodeXY.IndexOf(",", 0);
+                    targetX = int.Parse(nodeXY.Substring(0, nodeindex));
+                    targetY = int.Parse(nodeXY.Substring(nodeindex + 1));
+                    count = 4;
+                }
+            }
+            //通路换算成已通过
+            for (int i = 0; i < findway.Count; i++)
+            {
+                string nodepassXY = findway[i];
+                int index_pass = nodepassXY.IndexOf(",", 0);
+                int nodepassX = int.Parse(nodepassXY.Substring(0, index_pass));
+                int nodepassY = int.Parse(nodepassXY.Substring(index_pass + 1));
 
-    //        /////四个方向都检查完毕后
-    //        if (count <= 0)
-    //        {
-    //            //倒退到前一步
-    //            way.RemoveAt(way.Count - 1);
-    //            string nodeXY = way[way.Count - 1];
-    //            int nodeindex = nodeXY.IndexOf(",", 0);
-    //            targetX =int.Parse(nodeXY.Substring(0, nodeindex));
-    //            targetY = int.Parse(nodeXY.Substring(nodeindex + 1));
-    //        }
-    //    }
-    //    return way;
-    //}
+                empty_mazemap[nodepassX, nodepassY] = node.pass;
+            }
+            //出发点就为生成物品或怪物的点
+            empty_mazemap[int.Parse(nodeX), int.Parse(nodeY)] = node.produce;
+
+            //Debug.Log("MAP produce point" + nodeX + nodeY);
+        }
+    }
 
 }

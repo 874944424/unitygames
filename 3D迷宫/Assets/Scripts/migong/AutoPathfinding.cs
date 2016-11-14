@@ -10,7 +10,8 @@ public class AutoPathfinding :MonoBehaviour
     private int widthLimit;
     private int heightLimit;
 
-    private node[,] map;    //存放当前地图信息
+    [HideInInspector]
+    public node[,] map;    //存放当前地图信息
 
     private RandCreatePrim randcreateprim;
     private bool isRead = false;            //是否读取了完整的地图信息

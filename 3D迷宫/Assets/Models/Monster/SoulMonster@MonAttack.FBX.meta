@@ -164,13 +164,13 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleRotations: 1
+    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
     animationImportWarnings: "\nDefault bone length found in this file is different
       form the one found in the source avatar:\n\t'b_LeftLegUpper' : position error
-      = 57.287983 mm\n\t'b_RightLegUpper' : position error = 130.892365 mm\n\nClip
+      = 57.287994 mm\n\t'b_RightLegUpper' : position error = 130.892395 mm\n\nClip
       'Take 001' has import animation warnings that might lower retargeting quality:\nNote:
       Activate translation DOF on avatar to improve retargeting quality.\n\t'b_Spine'
       has translation animation that will be discarded.\n\t'b_Spine' is inbetween
@@ -211,9 +211,18 @@ ModelImporter:
       curves: []
       events:
       - time: 0.5063291
-        functionName: MonAttack
+        functionName: DamageCaculate
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 1000013815356252, guid: f68c41416d0c1e846a7a40c203582df6,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9508197
+        functionName: stopAttack
+        data: 
+        objectReferenceParameter: {fileID: 1000013815356252, guid: f68c41416d0c1e846a7a40c203582df6,
+          type: 2}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

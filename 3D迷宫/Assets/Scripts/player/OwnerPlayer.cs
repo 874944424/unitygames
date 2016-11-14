@@ -43,11 +43,25 @@ public class OwnerPlayer : MonoBehaviour
     public void TakeDamage(float damage)
     {
         this.hp -= damage;
+        if (hp <= 0)
+        {
+            TakeDeath();
+        }
+        //TODO加上屏幕晃动变红效果
     }
 
     public void SysncHp(float hp)
     {
         this.hp = hp;
     }
+    //死亡设计
+    public void TakeDeath()
+    {
+        transform.tag = Tags.dead;
+        firstpersoncontroller.enabled = false;
+        transform.GetComponent<CharacterController>().enabled = false;
+        gameObject.AddComponent<BoxCollider>().size = new Vector3(0.3f, 0.3f, 0.3f);
+        transform.GetComponent<Rigidbody>().isKinematic = false;
 
+    }
 }
