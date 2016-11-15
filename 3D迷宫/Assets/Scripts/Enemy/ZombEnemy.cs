@@ -39,7 +39,7 @@ public class ZombEnemy : Enemy
 
     protected void MakeDamegeAttack()
     {      
-        if(Vector3.Distance(player.transform.position, transform.position) <= attack_distance)
+        if(player != null && Vector3.Distance(player.transform.position, transform.position) <= attack_distance)
             player.GetComponent<PlayerAnimation>().PlayerOnHurt(attack);
     }
 

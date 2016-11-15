@@ -78,6 +78,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\CustomUVS.cs" />
     <Compile Include="Assets\Scripts\Enemy\AnimValueNames.cs" />
     <Compile Include="Assets\Scripts\Enemy\Enemy.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyBullet.cs" />
@@ -86,12 +87,16 @@
     <Compile Include="Assets\Scripts\Enemy\ZombEnemy.cs" />
     <Compile Include="Assets\Scripts\FollowPlayerSetMinimap.cs" />
     <Compile Include="Assets\Scripts\Gamemanager.cs" />
+    <Compile Include="Assets\Scripts\Gifts.cs" />
     <Compile Include="Assets\Scripts\MakeMark.cs" />
+    <Compile Include="Assets\Scripts\RotateSelf.cs" />
     <Compile Include="Assets\Scripts\Tags.cs" />
+    <Compile Include="Assets\Scripts\UIScale.cs" />
     <Compile Include="Assets\Scripts\migong\AutoPathfinding.cs" />
     <Compile Include="Assets\Scripts\migong\GetProducePoints.cs" />
     <Compile Include="Assets\Scripts\migong\RandCreatePrim.cs" />
     <Compile Include="Assets\Scripts\player\AnimsName.cs" />
+    <Compile Include="Assets\Scripts\player\Blood.cs" />
     <Compile Include="Assets\Scripts\player\Bullet.cs" />
     <Compile Include="Assets\Scripts\player\CSBulletGenertor.cs" />
     <Compile Include="Assets\Scripts\player\CSBulletHole.cs" />
@@ -99,14 +104,34 @@
     <Compile Include="Assets\Scripts\player\FollowMouseLook.cs" />
     <Compile Include="Assets\Scripts\player\OwnerPlayer.cs" />
     <Compile Include="Assets\Scripts\player\PlayerAnimation.cs" />
+    <Compile Include="Assets\StixGames - DirectX 11 Grass Shader\Example\SimpleMover.cs" />
+    <Compile Include="Assets\StixGames - DirectX 11 Grass Shader\Scripts\CircularDisplacer.cs" />
+    <Compile Include="Assets\StixGames - DirectX 11 Grass Shader\Scripts\GrassManipulationUtility.cs" />
+    <Compile Include="Assets\StixGames - DirectX 11 Grass Shader\Scripts\GrassTextureAdder.cs" />
+    <Compile Include="Assets\StixGames - DirectX 11 Grass Shader\Scripts\TextureUpdater.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Cartoon Soldier\Readme.txt" />
     <None Include="Assets\Fonts\LuckiestGuy\LICENSE.txt" />
+    <None Include="Assets\Shaders\Grass.shader" />
+    <None Include="Assets\Shaders\GrassDefinitionsAndFunctions.cginc" />
+    <None Include="Assets\Shaders\GrassFrag.cginc" />
+    <None Include="Assets\Shaders\GrassGeom.cginc" />
+    <None Include="Assets\Shaders\GrassSurface.cginc" />
+    <None Include="Assets\Shaders\GrassTessellation.cginc" />
+    <None Include="Assets\Shaders\GrassVertex.cginc" />
     <None Include="Assets\Shaders\Rim Lit Bumped Specular.shader" />
     <None Include="Assets\Shaders\TransparentBunmpedShader.shader" />
     <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
+    <None Include="Assets\StixGames - DirectX 11 Grass Shader\Example\Textures\CGTextures.txt" />
+    <None Include="Assets\StixGames - DirectX 11 Grass Shader\Grass.shader" />
+    <None Include="Assets\StixGames - DirectX 11 Grass Shader\GrassDefinitionsAndFunctions.cginc" />
+    <None Include="Assets\StixGames - DirectX 11 Grass Shader\GrassFrag.cginc" />
+    <None Include="Assets\StixGames - DirectX 11 Grass Shader\GrassGeom.cginc" />
+    <None Include="Assets\StixGames - DirectX 11 Grass Shader\GrassSurface.cginc" />
+    <None Include="Assets\StixGames - DirectX 11 Grass Shader\GrassTessellation.cginc" />
+    <None Include="Assets\StixGames - DirectX 11 Grass Shader\GrassVertex.cginc" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

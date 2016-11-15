@@ -267,8 +267,11 @@ public class RandCreatePrim : MonoBehaviour
                     obj_node.transform.parent = parentobj.transform;
                 }
                 //生成随机物
-                if(map[i, j] == node.truewayproduce || map[i, j] == node.produce)
-                     CreateProduce(i, j);
+                if (map[i, j] == node.truewayproduce || map[i, j] == node.produce)
+                {
+                    CreateProduce(i, j);
+                    CreateGifts(i, j);
+                }
                 //生成地面
                 GameObject obj_ground = Instantiate(groundPrefabs, new Vector3((float)i, -1, (float)j), Quaternion.identity) as GameObject;
                 obj_ground.transform.parent = parentobj.transform;
@@ -307,11 +310,29 @@ public class RandCreatePrim : MonoBehaviour
             map[x, y] = node;
         }
     }
-    //生成--TODO生成更多的怪物和物品
-    void CreateProduce(int x, int y)
+    //生成更多的怪物
+    public void CreateProduce(int x, int y)
     {
         int index_produce = UnityEngine.Random.Range(0, producePres.Count); //选着随机物品
-        GameObject produce_obj = Instantiate(producePres[index_produce], new Vector3(x * 10, 0, y * 10), Quaternion.identity) as GameObject;
+
+        GameObject produce_obj = Instantiate(producePres[index_produce], new Vector3(x * 10 + UnityEngine.Random.Range(-4, 5), -3, y * 10 + UnityEngine.Random.Range(-4, 5)), Quaternion.identity) as GameObject;
+        produce_obj.transform.parent = produceparent.transform;
+
+        int count_produce = UnityEngine.Random.Range(0, 4); //随机物品的个数
+        for (int i = 0; i < count_produce; i++)
+        {
+            index_produce = UnityEngine.Random.Range(0, 3);
+            produce_obj = Instantiate(producePres[index_produce], new Vector3(x * 10 + UnityEngine.Random.Range(-4, 5), 0, y * 10 + UnityEngine.Random.Range(-4, 5)), Quaternion.identity) as GameObject;
+            produce_obj.transform.parent = produceparent.transform;
+        }
+
+    }
+    //生成奖励物品
+    public void CreateGifts(int x, int y)
+    {
+        int index_produce = UnityEngine.Random.Range(6, producePres.Count); //选着随机物品
+
+        GameObject produce_obj = Instantiate(producePres[index_produce], new Vector3(x * 10 + UnityEngine.Random.Range(-4, 5), -3, y * 10 + UnityEngine.Random.Range(-4, 5)), Quaternion.identity) as GameObject;
         produce_obj.transform.parent = produceparent.transform;
     }
     //打通剩余的网格通路

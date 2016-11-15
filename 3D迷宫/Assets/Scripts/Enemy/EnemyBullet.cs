@@ -40,7 +40,7 @@ public class EnemyBullet : MonoBehaviour
 
     void OnHitCollider(RaycastHit hit)
     {
-        Debug.Log(hit.transform.name);
+        //Debug.Log(hit.transform.name);
 
         if (hit.collider.CompareTag(Tags.ground) || hit.collider.CompareTag(Tags.wall))
         {

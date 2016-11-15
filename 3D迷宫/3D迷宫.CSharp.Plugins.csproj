@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>GamePlugins:3</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>5.4.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -115,10 +117,25 @@
   <ItemGroup>
     <None Include="Assets\Cartoon Soldier\Readme.txt" />
     <None Include="Assets\Fonts\LuckiestGuy\LICENSE.txt" />
+    <None Include="Assets\Shaders\Grass.shader" />
+    <None Include="Assets\Shaders\GrassDefinitionsAndFunctions.cginc" />
+    <None Include="Assets\Shaders\GrassFrag.cginc" />
+    <None Include="Assets\Shaders\GrassGeom.cginc" />
+    <None Include="Assets\Shaders\GrassSurface.cginc" />
+    <None Include="Assets\Shaders\GrassTessellation.cginc" />
+    <None Include="Assets\Shaders\GrassVertex.cginc" />
     <None Include="Assets\Shaders\Rim Lit Bumped Specular.shader" />
     <None Include="Assets\Shaders\TransparentBunmpedShader.shader" />
     <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
+    <None Include="Assets\StixGames - DirectX 11 Grass Shader\Example\Textures\CGTextures.txt" />
+    <None Include="Assets\StixGames - DirectX 11 Grass Shader\Grass.shader" />
+    <None Include="Assets\StixGames - DirectX 11 Grass Shader\GrassDefinitionsAndFunctions.cginc" />
+    <None Include="Assets\StixGames - DirectX 11 Grass Shader\GrassFrag.cginc" />
+    <None Include="Assets\StixGames - DirectX 11 Grass Shader\GrassGeom.cginc" />
+    <None Include="Assets\StixGames - DirectX 11 Grass Shader\GrassSurface.cginc" />
+    <None Include="Assets\StixGames - DirectX 11 Grass Shader\GrassTessellation.cginc" />
+    <None Include="Assets\StixGames - DirectX 11 Grass Shader\GrassVertex.cginc" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

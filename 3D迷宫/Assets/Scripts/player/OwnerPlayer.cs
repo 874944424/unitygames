@@ -12,16 +12,27 @@ public class OwnerPlayer : MonoBehaviour
     private AudioListener audiolistener;
     private NetworkView networkview;
 
-    public float hp = 100; //角色血量
+    public int hp = 100;               //角色血量
+    public int max_hp = 100;           //角色最大血量
+    public int damage = 10;              //玩家的攻击力
+    public float armor = 4;                 //护甲值
+    public float weapons_attack = 1;        //武器攻击值
+
+    public Blood blood;                //血条控制
 
     void Awake()
     {
-
+        blood = GameObject.FindGameObjectWithTag(Tags.blood).GetComponent<Blood>();
         playercamera = GetComponentInChildren<Camera>();
         firstpersoncontroller = this.GetComponent<FirstPersonController>();
         playeranimation = this.GetComponent<PlayerAnimation>();
         audiolistener = this.GetComponentInChildren<AudioListener>();
         networkview = this.GetComponent<NetworkView>();
+    }
+    void Start()
+    {
+        blood.bloodmax_now = max_hp;
+        blood.bloodnow = hp;
     }
 
     void Update()
@@ -42,7 +53,8 @@ public class OwnerPlayer : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        this.hp -= damage;
+        this.hp -= ((int)damage - (int)(armor/4));
+        blood.bloodnow = this.hp;
         if (hp <= 0)
         {
             TakeDeath();
@@ -50,7 +62,7 @@ public class OwnerPlayer : MonoBehaviour
         //TODO加上屏幕晃动变红效果
     }
 
-    public void SysncHp(float hp)
+    public void SysncHp(int hp)
     {
         this.hp = hp;
     }
@@ -62,6 +74,5 @@ public class OwnerPlayer : MonoBehaviour
         transform.GetComponent<CharacterController>().enabled = false;
         gameObject.AddComponent<BoxCollider>().size = new Vector3(0.3f, 0.3f, 0.3f);
         transform.GetComponent<Rigidbody>().isKinematic = false;
-
     }
 }

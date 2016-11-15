@@ -10,4 +10,5 @@ public class Tags
     public const string playercamera = "playercamera";
     public const string enemy = "enemy";
     public const string dead = "dead";
+    public const string blood = "blood";
 }

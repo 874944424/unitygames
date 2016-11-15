@@ -31,6 +31,8 @@ public class Enemy : MonoBehaviour
     public Material origin_material_enemy;            //没被打中时的怪物敌人的贴图
     public float movebackdistance = 1f;             //攻击击退距离
 
+    public AudioClip dead_audio;                    //死亡音响
+
     public virtual void Start()
     {
         checkobj = transform.GetChild(0).gameObject;
@@ -111,7 +113,7 @@ public class Enemy : MonoBehaviour
                         point_pos = new Vector3(player_pos.x, transform.position.y, player_pos.z);
                     else
                     {
-                        Debug.Log((point_posx / 10) + "," + (int)((transform.position.z + 5) / 10f));
+                        //Debug.Log((point_posx / 10) + "," + (int)((transform.position.z + 5) / 10f));
                         node temp;
                         GameObject.Find("Gamemanager").GetComponent<RandCreatePrim>().map_dict.TryGetValue((point_posx / 10) + "," + (int)((transform.position.z + 5) / 10f), out temp);
                         if (temp == node.pass)

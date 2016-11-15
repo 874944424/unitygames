@@ -64,6 +64,6 @@ public class PlayerAnimation : MonoBehaviour
     {
         player.TakeDamage(damage);
         player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 1.5f, player.transform.position.z);
-        Debug.Log("受到伤害");
+        //Debug.Log("受到伤害");
     }
 }

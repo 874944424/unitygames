@@ -26,8 +26,11 @@ public class SoulEnemyShooter : SoulEnemy
         //子弹检测打中则受到伤害
         GameObject enemy_bullet = Instantiate(enemy_bulletpre, origin_gameobject.transform.position, Quaternion.identity) as GameObject;
         enemy_bullet.transform.parent = bullet_parent.transform;
-        Vector3 attack_pos = new Vector3(player.transform.position.x, enemy_bullet.transform.position.y, player.transform.position.z);
-        enemy_bullet.transform.LookAt(attack_pos);
+        if (player != null)
+        {
+            Vector3 attack_pos = new Vector3(player.transform.position.x, enemy_bullet.transform.position.y, player.transform.position.z);
+            enemy_bullet.transform.LookAt(attack_pos);
+        }
     }
 
     public override void OnHurt(int damage)

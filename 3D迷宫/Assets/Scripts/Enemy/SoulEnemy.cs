@@ -54,7 +54,7 @@ public class SoulEnemy : Enemy
     //伤害计算EVENT
     public void DamageCaculate()
     {
-        if(Vector3.Distance(player.transform.position, transform.position) <= attack_distance*1.5f)
+        if(player != null && Vector3.Distance(player.transform.position, transform.position) <= attack_distance*1.5f)
             player.GetComponent<PlayerAnimation>().PlayerOnHurt(attack);
     }
     //停止攻击动画播放EVENT

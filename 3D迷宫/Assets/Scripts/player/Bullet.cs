@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
     public float speed = 2000;
     public GameObject[] bulletHoles;        //子弹打中墙或地面贴图
     private GameObject bulletHole_parent;   //贴图父物体方便管理
-    public int damage = 10;              //玩家的攻击力
+    public OwnerPlayer ownerplayer;
 
     void Start()
     {
@@ -56,18 +56,18 @@ public class Bullet : MonoBehaviour
             if (hit.transform.GetComponent<Rigidbody>().mass == 1)
             {
                 //soulboss and soulmonster
-                hit.transform.GetComponent<SoulEnemy>().OnHurt(damage);
+                hit.transform.GetComponent<SoulEnemy>().OnHurt(ownerplayer.damage + (int)ownerplayer.weapons_attack);
                 hit.transform.GetComponent<SoulEnemy>().player = GameObject.FindGameObjectWithTag(Tags.palyer);
             }
             else if (hit.transform.GetComponent<Rigidbody>().mass == 2)
             {
                 //soulshooter
-                hit.transform.GetComponent<SoulEnemyShooter>().OnHurt(damage);
+                hit.transform.GetComponent<SoulEnemyShooter>().OnHurt(ownerplayer.damage + (int)ownerplayer.weapons_attack);
                 hit.transform.GetComponent<SoulEnemyShooter>().player = GameObject.FindGameObjectWithTag(Tags.palyer);
             }
             else if (hit.transform.GetComponent<Rigidbody>().mass == 3)
             {
-                hit.transform.GetComponent<ZombEnemy>().OnHurt(damage);
+                hit.transform.GetComponent<ZombEnemy>().OnHurt(ownerplayer.damage + (int)ownerplayer.weapons_attack);
                 hit.transform.GetComponent<ZombEnemy>().player = GameObject.FindGameObjectWithTag(Tags.palyer);
             }
         }
