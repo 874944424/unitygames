@@ -269,6 +269,7 @@ public class AutoPathfinding :MonoBehaviour
             }
         points_parent.transform.localScale = new Vector3(10, 10, 10);
         points_parent.transform.position = new Vector3(0, -5, 0);
+        Destroy(points_parent, 2f);
     }
 }
 

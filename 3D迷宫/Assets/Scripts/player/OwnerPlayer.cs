@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets.Characters.FirstPerson;
+using UnityEngine.UI;
 
 public class OwnerPlayer : MonoBehaviour
 {
@@ -19,10 +20,14 @@ public class OwnerPlayer : MonoBehaviour
     public float weapons_attack = 1;        //武器攻击值
 
     public Blood blood;                //血条控制
+    public Text armor_text;             
+    public Text attack_text;
 
     void Awake()
     {
         blood = GameObject.FindGameObjectWithTag(Tags.blood).GetComponent<Blood>();
+        armor_text = GameObject.Find("Armor").GetComponent<Text>();
+        attack_text = GameObject.Find("Attack").GetComponent<Text>();
         playercamera = GetComponentInChildren<Camera>();
         firstpersoncontroller = this.GetComponent<FirstPersonController>();
         playeranimation = this.GetComponent<PlayerAnimation>();
@@ -33,6 +38,8 @@ public class OwnerPlayer : MonoBehaviour
     {
         blood.bloodmax_now = max_hp;
         blood.bloodnow = hp;
+        armor_text.text = armor.ToString();
+        attack_text.text = (damage + weapons_attack).ToString();
     }
 
     void Update()
@@ -53,7 +60,9 @@ public class OwnerPlayer : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        this.hp -= ((int)damage - (int)(armor/4));
+        // 公式：设防御力为D，攻击力为A
+        //则实际伤害的效果为：A*1/(D/100 + 1)
+        this.hp -= (int)(damage / (armor/100 + 1));
         blood.bloodnow = this.hp;
         if (hp <= 0)
         {

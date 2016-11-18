@@ -64,12 +64,6 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="3D迷宫.CSharp.Plugins.csproj">
@@ -78,25 +72,28 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\CustomUVS.cs" />
+    <Compile Include="Assets\Prefabs\Gifts\Effects_01\Prefebs\DestroyForTime.cs" />
+    <Compile Include="Assets\Prefabs\Gifts\Effects_01\Prefebs\FollowTarget.cs" />
+    <Compile Include="Assets\Scripts\Common\CustomUVS.cs" />
+    <Compile Include="Assets\Scripts\Common\RotateSelf.cs" />
+    <Compile Include="Assets\Scripts\Common\Tags.cs" />
     <Compile Include="Assets\Scripts\Enemy\AnimValueNames.cs" />
     <Compile Include="Assets\Scripts\Enemy\Enemy.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyBullet.cs" />
     <Compile Include="Assets\Scripts\Enemy\SoulEnemy.cs" />
     <Compile Include="Assets\Scripts\Enemy\SoulEnemyShooter.cs" />
     <Compile Include="Assets\Scripts\Enemy\ZombEnemy.cs" />
-    <Compile Include="Assets\Scripts\FollowPlayerSetMinimap.cs" />
-    <Compile Include="Assets\Scripts\Gamemanager.cs" />
-    <Compile Include="Assets\Scripts\Gifts.cs" />
-    <Compile Include="Assets\Scripts\MakeMark.cs" />
-    <Compile Include="Assets\Scripts\RotateSelf.cs" />
-    <Compile Include="Assets\Scripts\Tags.cs" />
-    <Compile Include="Assets\Scripts\UIScale.cs" />
+    <Compile Include="Assets\Scripts\Manager\Gamemanager.cs" />
+    <Compile Include="Assets\Scripts\UI\Blood.cs" />
+    <Compile Include="Assets\Scripts\UI\EnemyBlood.cs" />
+    <Compile Include="Assets\Scripts\UI\FollowPlayerSetMinimap.cs" />
+    <Compile Include="Assets\Scripts\UI\Gifts.cs" />
+    <Compile Include="Assets\Scripts\UI\MakeMark.cs" />
+    <Compile Include="Assets\Scripts\UI\UIScale.cs" />
     <Compile Include="Assets\Scripts\migong\AutoPathfinding.cs" />
     <Compile Include="Assets\Scripts\migong\GetProducePoints.cs" />
     <Compile Include="Assets\Scripts\migong\RandCreatePrim.cs" />
     <Compile Include="Assets\Scripts\player\AnimsName.cs" />
-    <Compile Include="Assets\Scripts\player\Blood.cs" />
     <Compile Include="Assets\Scripts\player\Bullet.cs" />
     <Compile Include="Assets\Scripts\player\CSBulletGenertor.cs" />
     <Compile Include="Assets\Scripts\player\CSBulletHole.cs" />

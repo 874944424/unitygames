@@ -32,6 +32,9 @@ public class Enemy : MonoBehaviour
     public float movebackdistance = 1f;             //攻击击退距离
 
     public AudioClip dead_audio;                    //死亡音响
+    private bool isPlayaudio = false;               //是否播放死亡音效    
+
+    public int max_hp;
 
     public virtual void Start()
     {
@@ -41,6 +44,8 @@ public class Enemy : MonoBehaviour
         origin_material_enemy = transform.GetComponentInChildren<Renderer>().material;
         StartCoroutine(CheckFindAplayer());
         StartCoroutine(MoveToPlayer());
+
+        max_hp = hp;
     }
 
     public virtual void FixedUpdate()
@@ -174,6 +179,11 @@ public class Enemy : MonoBehaviour
     {
         if (hp <= 0)
         {
+            if (!isPlayaudio)
+            {
+                transform.GetComponent<AudioSource>().PlayOneShot(dead_audio);
+                isPlayaudio = true;
+            }
             anim.SetBool(AnimValueNames.death, true);
             transform.tag = Tags.dead;
             player = null;

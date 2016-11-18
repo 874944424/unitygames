@@ -28,7 +28,7 @@ public class SoulEnemyShooter : SoulEnemy
         enemy_bullet.transform.parent = bullet_parent.transform;
         if (player != null)
         {
-            Vector3 attack_pos = new Vector3(player.transform.position.x, enemy_bullet.transform.position.y, player.transform.position.z);
+            Vector3 attack_pos = new Vector3(player.transform.position.x- 0.37f, enemy_bullet.transform.position.y, player.transform.position.z);
             enemy_bullet.transform.LookAt(attack_pos);
         }
     }

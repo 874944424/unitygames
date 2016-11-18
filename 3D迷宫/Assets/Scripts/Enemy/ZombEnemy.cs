@@ -51,7 +51,7 @@ public class ZombEnemy : Enemy
 
     public virtual void OnDeading()
     {
-        Destroy(this, 1f);
+        Destroy(this.gameObject, 1f);
         this.GetComponent<CapsuleCollider>().enabled = false;
     }
 }
