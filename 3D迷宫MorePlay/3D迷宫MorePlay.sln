@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3D迷宫MorePlay.CSharp.Plugins", "3D迷宫MorePlay.CSharp.Plugins.csproj", "{8F08C5BF-35F0-BC29-6DFD-1BC7E36EBA8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3D迷宫MorePlay.CSharp", "3D迷宫MorePlay.CSharp.csproj", "{5B120C3E-D064-5259-7354-026CAF27E6E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3D迷宫MorePlay.CSharp.Editor", "3D迷宫MorePlay.CSharp.Editor.csproj", "{EBC4098C-167A-242C-16B3-0B4AFF4560F1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F08C5BF-35F0-BC29-6DFD-1BC7E36EBA8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F08C5BF-35F0-BC29-6DFD-1BC7E36EBA8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F08C5BF-35F0-BC29-6DFD-1BC7E36EBA8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F08C5BF-35F0-BC29-6DFD-1BC7E36EBA8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B120C3E-D064-5259-7354-026CAF27E6E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B120C3E-D064-5259-7354-026CAF27E6E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B120C3E-D064-5259-7354-026CAF27E6E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B120C3E-D064-5259-7354-026CAF27E6E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBC4098C-167A-242C-16B3-0B4AFF4560F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBC4098C-167A-242C-16B3-0B4AFF4560F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBC4098C-167A-242C-16B3-0B4AFF4560F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBC4098C-167A-242C-16B3-0B4AFF4560F1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
