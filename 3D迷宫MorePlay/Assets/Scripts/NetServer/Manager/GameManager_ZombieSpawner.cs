@@ -11,8 +11,12 @@ public class SpawnGameManager_ZombieSpawner : NetworkBehaviour
     private int counter;
     private int maxNumberOfZombies = 50;
     private float waitRote = 10;
-    private bool isSpawnActivoted = true; 
+    private bool isSpawnActivoted = true;
 
+    public override void OnStartLocalPlayer()
+    {
+        
+    }
     public override void OnStartServer()
     {
         zombieSpawn = GameObject.FindGameObjectsWithTag("ZombieSpawn");
@@ -20,6 +24,18 @@ public class SpawnGameManager_ZombieSpawner : NetworkBehaviour
         StartCoroutine(ZombieSpawner());
     }
 
+    IEnumerator CheckKeyCodeX()
+    {
+        while (true)
+        {
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                UnityEngine.Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
+            yield return new WaitForFixedUpdate();
+        }
+    }
     IEnumerator ZombieSpawner()
     {
         while (true)

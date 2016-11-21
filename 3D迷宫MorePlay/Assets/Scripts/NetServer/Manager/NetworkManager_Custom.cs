@@ -16,7 +16,6 @@ public class NetworkManager_Custom : NetworkManager
         SetPort();
         NetworkManager.singleton.StartHost();
     }
-
     public void JoinGame()
     {
         SetIPAddress();
@@ -39,7 +38,7 @@ public class NetworkManager_Custom : NetworkManager
         {
             SetupMenuSceneButtons();
         }
-        else if(level == 4)
+        if (level == 4)
         {
             SetupPlaySceneButtons();
         }
@@ -69,7 +68,7 @@ public class NetworkManager_Custom : NetworkManager
         {
             Destroy(obj);
         }
-        SceneManager.LoadScene(3);
+        //SceneManager.LoadScene(3);
         NetworkManager.singleton.StopHost();
     }
 
